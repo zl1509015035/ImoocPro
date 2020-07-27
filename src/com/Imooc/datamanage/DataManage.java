@@ -26,6 +26,10 @@ public class DataManage {
         return a;
     }
 
+    public void  showData(){
+
+    }
+
     public static void main(String[] args) {
         DataManage dm = new DataManage();
         int[] a = dm.insertData();

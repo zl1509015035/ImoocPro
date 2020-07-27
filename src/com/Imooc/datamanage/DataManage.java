@@ -1,5 +1,8 @@
 package com.Imooc.datamanage;
 
+import com.sun.org.apache.xpath.internal.objects.XNull;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DataManage {
@@ -47,18 +50,105 @@ public class DataManage {
      */
     public void insertAtArray(int[] a, int n , int k){
         //从最后一个数据开始移动，避免数据覆盖
-        for(int i =a.length-1;i>k;i--){
+        for(int i =a.length-1;i>=k;i--){
             a[i]=a[i-1];
         }
-        a[k] = n;
+        a[k-1] = n;
     }
 
+    /**
+     *  找出能被三整除的数
+     * @param a
+     */
     public void divThree(int[] a){
         String str="";
         int count = 0;
         for (int n : a) {
             if (n % 3 == 0){
+                str = str+n+"  ";
+                count++;
+            }
+        }
+        if(count==0){
+            System.out.println("数组中没有能被3整除的元素！" );
+        }else{
+            System.out.println("数组中能被3整除的元素为："+str);
+        }
+    }
 
+    public void notice(){
+        System.out.println("********************************");
+        System.out.println("        1--插入数据");
+        System.out.println("        2--显示 所有数据");
+        System.out.println("        3--在指定位置处插入数据");
+        System.out.println("        4--查询能被3整除的数据");
+        System.out.println("        0--退出");
+        System.out.println("********************************");
+
+
+    }
+
+    public static void main(String[] args) {
+        DataManage dm = new DataManage();
+        Scanner sc = new Scanner(System.in);
+        int[] a =null;
+        int input;
+        int n=0,k=0;
+        while(true){
+            dm.notice();
+            System.out.println("请输入对应的数字进行操作:");
+            input = sc.nextInt();
+            if(input==0){
+                System.out.println("退出程序！");
+                break;
+            }
+            switch (input){
+                case 1:
+                    //插入数据
+                    a=dm.insertData();
+                    //显示数据
+                    System.out.println("数组元素为:");
+                    dm.showData(a,a.length-1);
+                    break;
+                case 2:
+                    if(a!=null){
+                        System.out.println("数组元素为:");
+                        if(a[a.length-1]==0){
+                            //如果数组的最后一个元素为0，说明还没有插入数据，因此不显示最后一个数据
+                            dm.showData(a,a.length-1);
+                        }else{
+                            dm.showData(a,a.length);
+                        }
+                    }else{
+                        System.out.println("还未在数组中插入数据，请重新选择操作！");
+                    }
+                    break;
+                case 3:
+                    //在指定位置处插入数据
+                    if(a!=null){
+                        System.out.println("请输入要插入的数据:");
+                        try {
+                            n = sc.nextInt();
+                            System.out.println("请输入要插入数据的位置");
+                            k = sc.nextInt();
+                        }catch(InputMismatchException e) {
+                            System.out.println("输入的数据格式有误，不能有非数字");
+                            sc.next();
+                            break;
+                        }
+                        dm.insertAtArray(a,n,k);
+                        System.out.print("插入成功！数组的元素为:");
+                        dm.showData(a,a.length);
+                    }else{
+                        System.out.println("还未在数组中插入数据，请重新选择！");
+                    }
+                    break;
+                case 4:
+                    break;
+                case 0:
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -70,12 +160,20 @@ public class DataManage {
         dm.showData(a, a.length);
     }*/
 
-        public static void main(String[] args) {
+/*        public static void main(String[] args) {
             DataManage dm = new DataManage();
-            int[] a = dm.insertData();
-            for (int n : a) {
-                System.out.println(n+"  ");
-            }
+//            int[] a = dm.insertData();
+            int[] a ={23,15,75,68,32,48,27,45,99};
+            dm.showData(a, a.length - 1);
+            Scanner sc = new Scanner(System.in);
+            System.out.println("请输入要插入的数据:" );
+            int n = sc.nextInt();
+            System.out.println("请输入要插入的位置:");
+            int k = sc.nextInt();
+            dm.insertAtArray(a,n,k);
+            dm.showData(a,a.length);
+            dm.divThree(a);
 
-        }
+        }*/
+
 }
